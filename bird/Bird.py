@@ -25,7 +25,7 @@ class Bird:
         return flightDetails
 
 
-    def _testing_makeBird(self):
+    def _testing_makeBird1(self):
         """
         Allows to make a custom bird object
         :return:
@@ -33,5 +33,33 @@ class Bird:
         self.id = constants.BirdConstants.DEFAULT_BIRD_ID
         self.destination = 6
         self.duration = 10
+
+    def _testing_makeBird2(self):
+        self.id = constants.BirdConstants.DEFAULT_BIRD_ID
+        self.destination = 2
+        self.duration = 9  # duration in seconds
+
+    def _testing_makeBird3(self):
+        self.id = constants.BirdConstants.DEFAULT_BIRD_ID
+        self.destination = 2
+        self.duration = 10  # duration in seconds
+
+    def _testing_makeBird4(self):
+        self.id = constants.BirdConstants.DEFAULT_BIRD_ID
+        self.destination = 1
+        self.duration = 10  # duration in secondds
+
+    def _testing_makeBird5(self):
+        self.id = constants.BirdConstants.DEFAULT_BIRD_ID
+        self.destination = 2
+        self.duration = 10  # duration in seconds
+
+    def _testing_makeBird6(self):
+        self.id = constants.BirdConstants.DEFAULT_BIRD_ID
+        self.destination = 4
+        self.duration = 20 # duration in seconds
+
+
+
 
 

@@ -21,7 +21,7 @@ class PhysicalMap:
             self._createPhysicalMap()
         else:
             # Change suffix to generate more testcases
-            self._testing_createMap()
+            self._testing_createMap1()
         self.registerOnServer(daemon, nameServer)
 
 
@@ -106,7 +106,7 @@ class PhysicalMap:
         print("Network registered with NAME: PHYSICAL_MAP")
 
 
-    def _testing_createMap(self):
+    def _testing_createMap1(self):
         """
         IMPORTANT:
         Based on number of pigs you put here, you need to go to constant.Constants.MapConstants
@@ -126,6 +126,96 @@ class PhysicalMap:
         self.physicalToIPMap[3] = 2
         self.physicalToIPMap[4] = 3
         self.physicalToIPMap[5] = 4
+
+        self.nearestPig = 1
+        print self.physicalMap
+
+    def _testing_createMap2(self):
+        # bird hits at P0
+        self.physicalMap = [1, -2, 0, 2, 3, 4, -2, -2 - 1, -2, -2, -1, -2]
+        self.IPtoPhysicalMap[0] = 2
+        self.IPtoPhysicalMap[1] = 0
+        self.IPtoPhysicalMap[2] = 3
+        self.IPtoPhysicalMap[3] = 4
+        self.IPtoPhysicalMap[4] = 5
+
+        self.physicalToIPMap[2] = 0
+        self.physicalToIPMap[0] = 1
+        self.physicalToIPMap[3] = 2
+        self.physicalToIPMap[4] = 3
+        self.physicalToIPMap[5] = 4
+
+        self.nearestPig = 1
+        print self.physicalMap
+
+    def _testing_createMap3(self):
+        # bird hits at p0
+        self.physicalMap = [1, -1, 0, 2, 3, 4, -2, -2, -1, -2, -1, -2]
+        self.IPtoPhysicalMap[0] = 1
+        self.IPtoPhysicalMap[1] = 0
+        self.IPtoPhysicalMap[2] = 3
+        self.IPtoPhysicalMap[3] = 4
+        self.IPtoPhysicalMap[4] = 5
+
+        self.physicalToIPMap[1] = 0
+        self.physicalToIPMap[0] = 1
+        self.physicalToIPMap[3] = 2
+        self.physicalToIPMap[4] = 3
+        self.physicalToIPMap[5] = 4
+
+        self.nearestPig = 1
+        print self.physicalMap
+
+    def _testing_createMap4(self):
+        # bird hits at wall positioned at 1
+        self.physicalMap = [1, -1, 0, 2, 3, 4, -2, -2, -1, -2, -2, -2, -2]
+        self.IPtoPhysicalMap[0] = 2
+        self.IPtoPhysicalMap[1] = 0
+        self.IPtoPhysicalMap[2] = 3
+        self.IPtoPhysicalMap[3] = 4
+        self.IPtoPhysicalMap[4] = 5
+
+        self.physicalToIPMap[2] = 0
+        self.physicalToIPMap[0] = 1
+        self.physicalToIPMap[3] = 2
+        self.physicalToIPMap[4] = 3
+        self.physicalToIPMap[5] = 4
+
+        self.nearestPig = 1
+        print self.physicalMap
+
+    def _testing_createMap5(self):
+        # bird hits at wall positioned at 2
+        self.physicalMap = [1, 0, -1, 2, 3, 4, -2, -2, -1, -2, -2, -2, -2]
+        self.IPtoPhysicalMap[0] = 1
+        self.IPtoPhysicalMap[1] = 0
+        self.IPtoPhysicalMap[2] = 3
+        self.IPtoPhysicalMap[3] = 4
+        self.IPtoPhysicalMap[4] = 5
+
+        self.physicalToIPMap[3] = 2
+        self.physicalToIPMap[0] = 1
+        self.physicalToIPMap[1] = 0
+        self.physicalToIPMap[4] = 3
+        self.physicalToIPMap[5] = 4
+
+        self.nearestPig = 1
+        print self.physicalMap
+
+    def _testing_createMap6(self):
+        # bird hits at wall positioned at 4
+        self.physicalMap = [-2, 5, 1, 0, -1, 2, 3, 4, -2, -2, -1, -2, -2]
+        self.IPtoPhysicalMap[0] = 3
+        self.IPtoPhysicalMap[1] = 2
+        self.IPtoPhysicalMap[2] = 5
+        self.IPtoPhysicalMap[3] = 6
+        self.IPtoPhysicalMap[4] = 7
+
+        self.physicalToIPMap[3] = 0
+        self.physicalToIPMap[2] = 1
+        self.physicalToIPMap[5] = 2
+        self.physicalToIPMap[6] = 3
+        self.physicalToIPMap[7] = 4
 
         self.nearestPig = 1
         print self.physicalMap
