@@ -7,7 +7,7 @@ class Bird:
         if (mode == constants.RuntimeConstants.MODE_RANDOM):
             self._makeBird()
         else:
-            self._testing_makeBird()
+            self._testing_makeBird1()
 
     def _makeBird(self):
         """
