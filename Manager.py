@@ -3,7 +3,7 @@ import constants.Constants as constants
 from bird.Bird import Bird
 import time
 
-mode = constants.RuntimeConstants.MODE_RANDOM
+mode = constants.RuntimeConstants.MODE_TESTING
 physicalMapURI = constants.UriConstants.URI_PYRONAME + constants.UriConstants.URI_PHYSICAL_MAP
 physicalMap = Pyro4.Proxy(physicalMapURI)
 
@@ -23,7 +23,7 @@ nearestPig = Pyro4.Proxy(nearestPigURI)  # use name server object lookup uri sho
 # message is a tuple
 currentTime = time.time()
 message = [constants.MessageConstants.MSGTYPE_BIRD_APPROACHING, constants.MessageConstants.DEFAULT_MESSAGE_ID, constants.MessageConstants.ID_MANAGER, destination, currentTime + duration]
-print nearestPig.pushMessage(message)
+nearestPig.pushMessage(message)
 
 # start timer
 time.sleep(10)

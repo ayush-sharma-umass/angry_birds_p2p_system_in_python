@@ -6,7 +6,7 @@ from bird.Bird import Bird
 from topology.PhysicalMap import PhysicalMap
 from pigs.Pig import Pig
 
-mode = constants.RuntimeConstants.MODE_RANDOM
+mode = constants.RuntimeConstants.MODE_TESTING
 daemon = Pyro4.Daemon()
 # finds the name server
 nameServer = Pyro4.locateNS(constants.ServerConstants.SERVER_HOST, constants.ServerConstants.SERVER_PORT)
