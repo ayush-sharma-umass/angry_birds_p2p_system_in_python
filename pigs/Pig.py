@@ -9,6 +9,7 @@ import time
 class Pig:
     msgID = 1
     birdAttackTime = constants.PigConstants.PIG_DEFAULT_BIRD_ATTACKTIME
+
     def __init__(self, ip, daemon, nameServer):
         """
         self.ip = pig's ip
@@ -22,10 +23,25 @@ class Pig:
         """
         self.ip = ip
         self.messageCache = []
+        self.listNameServer = []
         self._registerOnServer(daemon, nameServer)
         self.status = constants.PigConstants.PIG_ALIVE
         self.alertCaller = -1
         self.orginalSender = False
+
+    def loadNameServers(self, listNameservers):
+        self.listNameServer = listNameservers
+
+    def checkStatus(self):
+        """
+        Returns status
+        Status can be three types:
+        1) ALIVE
+        2) DEAD
+        3) EVADED - basically it means alive NOW but could have been affected earlier
+        :return:
+        """
+        return self.status
 
     def pushMessage(self, message):
         """
@@ -80,9 +96,9 @@ class Pig:
         else:
             nbrs = self._getNetworkNeighbours()
             for nbr in nbrs:
-                self.sendIAmSafe(nbr, message)
+                self._sendIAmSafe(nbr, message)
 
-    def sendIAmSafe(self, nbr, message):
+    def _sendIAmSafe(self, nbr, message):
         """
         This method sends the I_AM_SAFE message.
         I_AM_SAFE message is sent by an original alerting node to its physical neighbour to mark itself safe now.
@@ -91,9 +107,15 @@ class Pig:
         :return:
         """
         time.sleep(constants.MapConstants.DEFAULT_WAIT_TIME) # we add a delay in message propagation
-        pigURI = constants.UriConstants.URI_PYRONAME + str(nbr)
-        pigProxy = Pyro4.Proxy(pigURI)
-        pigProxy.pushMessage(message)
+        pigProxy = str(nbr)
+        pigUri = ""
+        if (nbr % 2 == 0):
+            pigUri = self.listNameServer[0].lookup(pigProxy)
+        else:
+            pigUri = self.listNameServer[1].lookup(pigProxy)
+        pig = Pyro4.Proxy(pigUri)
+        pig.pushMessage(message)
+
 
     def _handleBirdApproachingMessage(self, message):
         """
@@ -128,10 +150,14 @@ class Pig:
         time.sleep(constants.MapConstants.DEFAULT_WAIT_TIME)
         if (message[1] not in self.messageCache):
             self.messageCache.append(message[1])
-        pigURI = constants.UriConstants.URI_PYRONAME + str(nbr)
-        pigProxy = Pyro4.Proxy(pigURI)
-        message[2] = self.ip
-        pigProxy.pushMessage(message)
+        pigProxy = str(nbr)
+        pigUri = ""
+        if (nbr % 2 == 0):
+            pigUri = self.listNameServer[0].lookup(pigProxy)
+        else:
+            pigUri = self.listNameServer[1].lookup(pigProxy)
+        pig = Pyro4.Proxy(pigUri)
+        pig.pushMessage(message)
 
     def _handleTakeShelterMessage(self, message):
         """
@@ -193,20 +219,14 @@ class Pig:
         time.sleep(constants.MapConstants.DEFAULT_WAIT_TIME)
         if (message[1] not in self.messageCache):
             self.messageCache.append(message[1])
-        pigURI = constants.UriConstants.URI_PYRONAME + str(nbr)
-        pigProxy = Pyro4.Proxy(pigURI)
-        pigProxy.pushMessage(message)
-
-    def checkStatus(self):
-        """
-        Returns status
-        Status can be three types:
-        1) ALIVE
-        2) DEAD
-        3) EVADED - basically it means alive but could have been affected
-        :return:
-        """
-        return self.status
+        pigProxy = str(nbr)
+        pigUri = ""
+        if (nbr % 2 == 0):
+            pigUri = self.listNameServer[0].lookup(pigProxy)
+        else:
+            pigUri = self.listNameServer[1].lookup(pigProxy)
+        pig = Pyro4.Proxy(pigUri)
+        pig.pushMessage(message)
 
     def _handleAcknowledgement(self, message):
         """
@@ -238,8 +258,8 @@ class Pig:
                 Pig.msgID += 1
                 nbrs = self._getNetworkNeighbours()
                 for nbr in nbrs:
-                    self.sendIAmSafe(nbr, message1)
-                    self.sendIAmSafe(nbr, message2)
+                    self._sendIAmSafe(nbr, message1)
+                    self._sendIAmSafe(nbr, message2)
 
             else:
                 #If this pig is not the original sender
@@ -268,9 +288,15 @@ class Pig:
         time.sleep(constants.MapConstants.DEFAULT_WAIT_TIME)
         if (message[1] not in self.messageCache):
             self.messageCache.append(message[1])
-        pigURI = constants.UriConstants.URI_PYRONAME + str(nbr)
-        pigProxy = Pyro4.Proxy(pigURI)
-        pigProxy.pushMessage(message)
+
+        pigProxy = str(nbr)
+        pigUri = ""
+        if (nbr % 2 == 0):
+            pigUri = self.listNameServer[0].lookup(pigProxy)
+        else:
+            pigUri = self.listNameServer[1].lookup(pigProxy)
+        pig = Pyro4.Proxy(pigUri)
+        pig.pushMessage(message)
 
     def _sendAlert(self):
         """
@@ -356,9 +382,10 @@ class Pig:
         :return:
         """
         # register this pig with the name server
+        print "Pig: ", nameServer
         uri = daemon.register(self)
         nameServer.register(str(self.ip), uri)
-        print("Pig registered with ip: {}".format(self.ip))
+        print("Pig registered with ip: {} and uri: {}".format(self.ip, uri))
 
 
 

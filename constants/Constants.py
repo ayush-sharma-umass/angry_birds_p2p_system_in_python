@@ -59,10 +59,6 @@ class MessageConstants:
     ID_MANAGER = 1234;
     DEFAULT_MESSAGE_ID = 0;
 
-class ServerConstants:
-    # Server configurations
-    SERVER_PORT = 9090
-    SERVER_HOST = "localhost"
 
 class UriConstants:
     URI_PYRONAME = "PYRONAME:"
