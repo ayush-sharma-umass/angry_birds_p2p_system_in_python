@@ -12,7 +12,7 @@ serverPort = config.serverPort2
 ################################################
 
 
-daemon2 = Pyro4.Daemon(host = serverHost, port = serverPort)
+daemon2 = Pyro4.Daemon()
 #Pyro4.Daemon.serveSimple(daemon = custom_daemon)
 
 print "Server 1: "

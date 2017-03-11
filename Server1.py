@@ -13,7 +13,7 @@ serverHost = config.serverHost1
 serverPort = config.serverPort1
 ################################################
 
-daemon1 = Pyro4.Daemon("localhost")
+daemon1 = Pyro4.Daemon()
 
 nameServer = Pyro4.locateNS(serverHost, serverPort)
 print "Server 1: "
